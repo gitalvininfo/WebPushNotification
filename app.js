@@ -1,6 +1,32 @@
 const webpush = require('web-push');
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
-console.log(webpush.generateVAPIDKeys());
+
+const app = express();
+app.use(cors({ origin: '*' }));
+app.use(bodyParser.json());
+
+app.listen(3000, () => {
+    console.log('The server started on port 3000');
+});
+
+
+app.get('/', (req, res) => {
+    res.send(
+        "<h1 style='text-align: center'>Welcome to FunOfHeuristic <br><br>😃👻😃👻😃👻😃👻😃</h1>"
+    );
+});
+
+app.post('/data', (req, res) => {
+    console.log('request came');
+    const userData = req.body;
+    console.log(JSON.stringify(userData));
+    res.send(userData);
+});
+
+
 
 const publicKey = "BLNhRPmytqEzQk7xgfPu90wycmiZyUF1hvWkRQz7CyXt_P2zqPI72CDyIrRPcJlyMNj8PZdbYaNACUgOEHSh-9g";
 const privateKey = "AJw2m9P9W72i6-SXxEfcp3BHVTIz5bxhEfe47kNqhnE";
@@ -14,9 +40,7 @@ const sub = {
     }
 };
 
-webpush.setVapidDetails("mailto:example@yourdomain.org", publicKey, privateKey);
-
-
+// webpush.setVapidDetails("mailto:example@yourdomain.org", publicKey, privateKey);
 
 const payload = {
     notification: {
@@ -26,4 +50,4 @@ const payload = {
     }
 }
 
-webpush.sendNotification(sub, JSON.stringify(payload));
+// webpush.sendNotification(sub, JSON.stringify(payload));
